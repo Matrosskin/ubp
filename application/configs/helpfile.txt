@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS user (
+    UserID INT(4) NOT NULL AUTO_INCREMENT,
+    Username VARCHAR(10) NOT NULL,
+    Password TEXT NOT NULL,
+    PRIMARY KEY (UserID),
+    UNIQUE INDEX "identity_username_idx" ("Username"))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS blog (
+    BlogID INT(4) NOT NULL AUTO_INCREMENT,
+    UserID INT(4) NOT NULL,
+    BlogName VARCHAR(50) NOT NULL,
+    PRIMARY KEY (BlogID))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS post (
+    PostID INT(4) NOT NULL AUTO_INCREMENT,
+    BlogID INT(4) NOT NULL,
+    PostName VARCHAR(50) NOT NULL,
+    PostBody TEXT NOT NULL,
+    PRIMARY KEY (PostID))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+    $manager = Doctrine_Manager::getInstance();
+// create database connection
+//    $conn = Doctrine_Manager::connection(
+//        'mysql://ubp:ubp@ubp/ubp', 'doctrine');
+    Doctrine::generateModelsFromDb('/tmp/models',
+        array('doctrine'),
+        array('classPrefix' => '')
+        );
