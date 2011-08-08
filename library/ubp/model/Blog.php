@@ -12,5 +12,13 @@
  */
 class ubp_model_Blog extends ubp_model_BaseBlog
 {
+    public function setUp()
+    {
+        $this->hasOne('ubp_model_User', array(
+            'local' => 'UserID',
+            'foreign' => 'UserID'
+            )
+        );
+    }
 
 }

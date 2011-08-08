@@ -37,6 +37,7 @@ abstract class ubp_model_BaseUser extends Doctrine_Record
              'primary' => false,
              'notnull' => true,
              'autoincrement' => false,
+             'unique'
              ));
         $this->hasColumn('Password', 'string', null, array(
              'type' => 'string',
@@ -46,16 +47,16 @@ abstract class ubp_model_BaseUser extends Doctrine_Record
              'notnull' => true,
              'autoincrement' => false,
              ));
-        $this->index('identity_username_idx', array(
-                'fields' => array(
-                    'Username' => array(
-                        'sorting' => 'ASC',
-                        'length'  => 10),
-                        'code'
-                    ),
-                'type' => 'unique',
-            )
-        );
+//        $this->index('myindex', array(
+//                'fields' => array(
+//                    'Username' => array(
+//                        'sorting' => 'ASC',
+//                        'length'  => 10),
+//                        'code'
+//                    ),
+//                'type' => 'unique',
+//            )
+//        );
     }
 
     public function setUp()

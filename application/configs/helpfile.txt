@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS user (
     Username VARCHAR(10) NOT NULL,
     Password TEXT NOT NULL,
     PRIMARY KEY (UserID),
-    UNIQUE INDEX "identity_username_idx" ("Username"))
+    UNIQUE KEY (Username))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS blog (

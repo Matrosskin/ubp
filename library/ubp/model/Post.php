@@ -12,5 +12,12 @@
  */
 class ubp_model_Post extends ubp_model_BasePost
 {
-
+    public function setUp()
+    {
+        $this->hasOne('ubp_model_Blog', array(
+            'local' => 'BlogID',
+            'foreign' => 'BlogID'
+            )
+        );
+    }
 }

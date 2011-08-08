@@ -2,7 +2,6 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-
     protected function _initDoctrine()
     {
         require_once(APPLICATION_PATH . '/../library/doctrine/lib/Doctrine.php');

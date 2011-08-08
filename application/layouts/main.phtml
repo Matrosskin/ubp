@@ -10,8 +10,15 @@
         <div id="header">
             <div id="menu">
                 <a href="<?php echo $this->url(array(), 'home'); ?>">HOME</a>
-                <a href="<?php echo $this->url(array(), 'login'); ?>">LOGIN</a>
-                <a href="<?php echo $this->url(array(), 'register'); ?>">REGISTER</a>
+                <?php if (Zend_Auth::getInstance()->hasIdentity()): ?>
+                    <a href="<?php echo $this->url(array(), 'logout'); ?>">LOGOUT</a>
+                    <a href="<?php echo $this->url(array(), 'account'); ?>">MY ACCOUNT</a>
+                    <a href="<?php echo $this->url(array(), 'blog'); ?>">MY BLOG</a>
+                <?php else: ?>
+                    <a href="<?php echo $this->url(array(), 'login'); ?>">LOGIN</a>
+                    <a href="<?php echo $this->url(array(), 'register'); ?>">REGISTER</a>
+                <?php endif; ?>
+
             </div>
         </div>
         <div id="content">

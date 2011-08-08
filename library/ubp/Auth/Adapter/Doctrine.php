@@ -18,8 +18,8 @@ class ubp_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface
     {
         $q = Doctrine_Query::create()
             ->from('ubp_model_User u')
-            ->where('u.Username = ? AND u.Password = PASSWORD(?)',
-                array($this->username, $this->password)
+            ->where('u.Username = ? AND u.Password = ?',
+                array($this->username, md5($this->password))
             );
         $result = $q->fetchArray();
         if (count($result) == 1) {

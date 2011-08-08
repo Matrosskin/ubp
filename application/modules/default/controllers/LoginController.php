@@ -34,7 +34,7 @@ class LoginController extends Zend_Controller_Action
                     } else {
                         $this->_helper->getHelper('FlashMessenger')
                             ->addMessage('You were successfully logged in.');
-                        $this->_redirect('/admin/login/success');    //this part mast be changed after login page and creating  DB
+                        $this->_redirect('/my/success');
                     }
                 } else {
                     $this->view->message = 'You could not be logged in. Please try again or register.';
@@ -50,7 +50,7 @@ class LoginController extends Zend_Controller_Action
                 ->getHelper('FlashMessenger')
                 ->getMessages();
         } else {
-            $this->_redirect('/');
+            $this->_redirect('/my/');
         }
     }
 
@@ -65,18 +65,24 @@ class LoginController extends Zend_Controller_Action
     {
         $form = new ubp_Form_Register();
         $this->view->form = $form;
-
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $newuser = new ubp_model_User();
                 $newuser->fromArray($form->getValues());
-                var_dump($newuser->isValid());exit;
-                $newuser->save();
+                $pvalue = md5($newuser->get('Password'));
+                $newuser->set('Password', $pvalue);
                 $username = $form->getValue('Username');
-//                var_dump($username);exit;
-                $this->_helper->getHelper('FlashMessenger')->addMessage(
-                    'Now you can login to site with name' . $username);
-                $this->_redirect('/login');
+                try {
+                    $newuser->save(); //Throws an Exception in case of failure
+                    $this->_helper->getHelper('FlashMessenger')->addMessage(
+                        'Now you can login to site with name' . $username);
+                    $this->_redirect('/login');
+                } catch (Doctrine_Connection_Mysql_Exception $e) {
+                    if ($e->getPortableMessage() == "already exists") {
+                        $this->view->message = 'You cannot use the name "' . $username .
+                                '" because it is already registered. Please change the name?';
+                    }
+                }
             }
         }
     }

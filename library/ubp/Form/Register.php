@@ -28,6 +28,14 @@ class ubp_Form_Register extends Zend_Form
         // attach elements to form
         $this->addElement($username)
             ->addElement($password)
-            ->addElement($submit);
+            ->addElement($submit)
+//            ->addElement('text', 'Username', array(
+//                'validators' => array(
+//                    array(
+//                        'validator' => new ubp_Validator_NoRecordExists('User','Username')
+//                    )
+//                )
+//            ))
+;
     }
 }
