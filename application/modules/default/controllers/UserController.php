@@ -17,13 +17,13 @@ class UserController extends Zend_Controller_Action
 
     public function showaccountAction()
     {
-//        $q = Doctrine_Query::create()
-//            ->select('u.UserID')
-//            ->from('ubp_model_User u')
-//            ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
-//        $result = $q->fetchArray();
-////                echo '<pre>';var_dump($result[0]['UserID']);exit;
-//                $newblog->set('UserID', $result[0]['UserID']);
+        $q = Doctrine_Query::create()
+            ->select('b.BlogName')
+            ->from('ubp_model_Blog b')
+            ->leftJoin('b.ubp_model_User u')
+            ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
+        $result = $q->fetchArray();
+        $this->view->blog = $result[0];
     }
 
     public function showblogAction()
@@ -46,6 +46,7 @@ class UserController extends Zend_Controller_Action
                 $result = $q->fetchArray();
                 $newblog->set('UserID', $result[0]['UserID']);
                 $newblog->save();
+                $this->_redirect('/my/account');
             }
         }
     }
