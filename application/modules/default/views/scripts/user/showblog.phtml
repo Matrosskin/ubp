@@ -1,1 +1,15 @@
 <h2> This is your blog </h2>
+<table>
+    <?php foreach ($this->posts as $p):?>
+    <tr>
+        <td>
+            <h3><?php echo $this->escape($p['PostName']); ?></h3>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->escape($p['PostBody']); ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>

@@ -8,7 +8,7 @@ class IndexController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
-public function indexAction()
+    public function indexAction()
     {
 //        // action body
 //        $manager = Doctrine_Manager::getInstance();
@@ -37,6 +37,11 @@ public function indexAction()
         $result = $q->fetchArray();
 //        echo '<pre>';var_dump($result);exit;
         $this->view->blogs = $result;
+    }
+
+    public function showblogAction()
+    {
+
     }
 }
 

@@ -13,8 +13,6 @@ class ubp_Form_CreateBlog extends Zend_Form
             ->setOptions(array('size' => '50'))
             ->setRequired(true)
             ->addValidator('NotEmpty', true)
-//            ->addValidator('Alpha', true)
-//            ->addFilter('HtmlEntities')
             ->addFilter('StringTrim');
 
     // create submit button

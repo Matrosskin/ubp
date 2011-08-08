@@ -1,0 +1,8 @@
+edit blog
+edit post
+delete blog
+delete post
+show list of posts in blog for guests
+show post for guests
+Admin user
+show my post in separate page
