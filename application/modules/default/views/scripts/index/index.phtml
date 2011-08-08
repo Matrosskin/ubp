@@ -1,1 +1,21 @@
 <h2>This is User-Blog-Post site</h2>
+<table>
+    <tr>
+        <td class="key">
+            User
+        </td>
+        <td class="key">
+            Blog
+        </td>
+    </tr>
+    <?php foreach ($this->blogs as $b):?>
+    <tr>
+        <td>
+            <?php echo $this->escape($b['ubp_model_User']['Username']); ?>
+        </td>
+        <td>
+            <?php echo $this->escape($b['BlogName']); ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>

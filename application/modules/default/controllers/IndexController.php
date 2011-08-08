@@ -19,8 +19,24 @@ public function indexAction()
 //        array('doctrine'),
 //        array('classPrefix' => '')
 //        );
+
+//        $q = Doctrine_Query::create()
+//            ->from('Square_Model_Item i')
+//            ->leftJoin('i.Square_Model_Grade g')
+//            ->leftJoin('i.Square_Model_Country c')
+//            ->leftJoin('i.Square_Model_Type t');
+//        $result = $q->fetchArray();
+//        $this->view->records = $result;
+
+        $q = Doctrine_Query::create()
+//            ->select('b.BlogName u.Username')
+            ->from('ubp_model_Blog b')
+            ->leftJoin('b.ubp_model_User u')
+//            ->where('b.UserID = u.UserID')
+                ;
+        $result = $q->fetchArray();
+//        echo '<pre>';var_dump($result);exit;
+        $this->view->blogs = $result;
     }
-
-
 }
 
