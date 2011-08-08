@@ -7,13 +7,22 @@
         <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" /> -->
     </head>
     <style>
-        a{
-            border: 2px blue solid;
+        #menu a{
+            border: 2px firebrick solid;
             padding: 4px;
         }
 
+        #menu2{
+            margin-top: 10px;
+        }
+
+        #menu2 a{
+            border: 1px firebrick solid;
+            padding: 1px;
+        }
+
         #content{
-            border: 1px green solid;
+            border: 1px black solid;
             margin-top: 10px;
             padding: 4px;
         }
@@ -34,7 +43,9 @@
                     <a href="<?php echo $this->url(array(), 'login'); ?>">LOGIN</a>
                     <a href="<?php echo $this->url(array(), 'register'); ?>">REGISTER</a>
                 <?php endif; ?>
-
+            </div>
+            <div id="menu2">
+                <a href="<?php echo $this->url(array(), 'c-blog'); ?>">Создать блог</a>
             </div>
         </div>
         <div id="content">
