@@ -45,7 +45,7 @@
                 <?php if (Zend_Auth::getInstance()->hasIdentity()): ?>
                     <a href="<?php echo $this->url(array(), 'logout'); ?>">LOGOUT</a>
                     <a href="<?php echo $this->url(array(), 'account'); ?>">MY ACCOUNT</a>
-                    <a href="<?php echo $this->url(array(), 'shm-blog'); ?>">MY BLOG</a>
+
                 <?php else: ?>
                     <a href="<?php echo $this->url(array(), 'login'); ?>">LOGIN</a>
                     <a href="<?php echo $this->url(array(), 'register'); ?>">REGISTER</a>

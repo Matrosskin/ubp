@@ -79,7 +79,7 @@ class UserController extends Zend_Controller_Action
 //                echo '<pre>';var_dump($result);exit;
                 $newpost->set('BlogID', $result[0]['BlogID']);
                 $newpost->save();
-                $this->_redirect('/my/blog');
+                $this->_redirect('/my/showblog/' . $result[0]['BlogID']);
             }
         }
     }
@@ -158,12 +158,17 @@ class UserController extends Zend_Controller_Action
         //read array of record identifiers
         //delete records from database
         if($input->isValid()) {
-//            echo '<pre>';
-//                        var_dump($input->id);exit;
+//            Remove blog record
             $q = Doctrine_Query::create()
                 ->delete('ubp_model_Blog b')
                 ->where('b.BlogID = ?', $input->id);
             $result = $q->execute();
+//            Remove all posts in this blog
+            $q = Doctrine_Query::create()
+                ->delete('ubp_model_Post p')
+                ->where('p.BlogID = ?', $input->id);
+            $result = $q->execute();
+
             $this->_helper->getHelper('FlashMessenger')
                 ->addMessage('The records were successfully deleted.');
             $this->_redirect('/my/account');
