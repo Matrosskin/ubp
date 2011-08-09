@@ -24,6 +24,7 @@ class UserController extends Zend_Controller_Action
             ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
         $result = $q->fetchArray();
         $this->view->blog = $result[0];
+
     }
 
     public function showblogAction()
@@ -75,8 +76,7 @@ class UserController extends Zend_Controller_Action
                     ->leftJoin('b.ubp_model_User u')
                     ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
                 $result = $q->fetchArray();
-//                echo '<pre>';
-//                                var_dump($result);exit;
+//                echo '<pre>';var_dump($result);exit;
                 $newpost->set('BlogID', $result[0]['BlogID']);
                 $newpost->save();
                 $this->_redirect('/my/blog');
@@ -140,6 +140,35 @@ class UserController extends Zend_Controller_Action
             } else {
                 throw new Zend_Controller_Action_Exception('Invalid input');
             }
+        }
+    }
+
+    public function delblogAction()
+    {
+    // set filters and validators for POST input
+        $filters = array(
+            'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
+        );
+        $validators = array(
+            'id' => array('NotEmpty', 'Int')
+        );
+        $input = new Zend_Filter_Input($filters, $validators);
+        $input->setData($this->getRequest()->getParams());
+        //test if input is valid
+        //read array of record identifiers
+        //delete records from database
+        if($input->isValid()) {
+//            echo '<pre>';
+//                        var_dump($input->id);exit;
+            $q = Doctrine_Query::create()
+                ->delete('ubp_model_Blog b')
+                ->where('b.BlogID = ?', $input->id);
+            $result = $q->execute();
+            $this->_helper->getHelper('FlashMessenger')
+                ->addMessage('The records were successfully deleted.');
+            $this->_redirect('/my/account');
+        } else {
+            throw new Zend_Controller_Action_Exception('Invalid input');
         }
     }
 }

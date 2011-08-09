@@ -1,5 +1,6 @@
 <h2> This is your account </h2>
 <div class="bloglist">
+    <?php if ($this->blog) {?>
     <a href="<?php echo $this->url(array('id' => ($this->blog['BlogID'])), 'shm-blog2'); ?>">
         <?php echo $this->escape($this->blog['BlogName']); ?>
     <a href="<?php echo $this->url(array('id' => ($this->blog['BlogID'])), 'd-blog'); ?>"
@@ -10,5 +11,6 @@
        style="float:right;  margin-right: 10px;">
         EDIT
     </a>
+    <?php };?>
     <br style="clear:right" />
 </div>
