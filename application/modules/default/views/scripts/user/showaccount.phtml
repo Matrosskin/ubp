@@ -2,5 +2,13 @@
 <div class="bloglist">
     <a href="<?php echo $this->url(array('id' => ($this->blog['BlogID'])), 'shm-blog2'); ?>">
         <?php echo $this->escape($this->blog['BlogName']); ?>
+    <a href="<?php echo $this->url(array('id' => ($this->blog['BlogID'])), 'd-blog'); ?>"
+       style="float:right; margin-right: 10px;">
+        DELETE
     </a>
+    <a href="<?php echo $this->url(array('id' => ($this->blog['BlogID'])), 'e-blog'); ?>"
+       style="float:right;  margin-right: 10px;">
+        EDIT
+    </a>
+    <br style="clear:right" />
 </div>
