@@ -1,1 +1,17 @@
 <h2> This is blog of somethin user...</h2>
+<table>
+    <?php foreach ($this->posts as $p):?>
+    <tr>
+        <td>
+            <a href="<?php echo $this->url(array('id' => ($p['PostID'])), 'sh-post'); ?>">
+                <h3><?php echo $this->escape($p['PostName']); ?></h3>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->escape($p['PostBody']); ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>

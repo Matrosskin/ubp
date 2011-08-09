@@ -14,7 +14,9 @@
             <?php echo $this->escape($b['ubp_model_User']['Username']); ?>
         </td>
         <td>
-            <?php echo $this->escape($b['BlogName']); ?>
+            <a href="<?php echo $this->url(array('id' => $b['BlogID']), 'sh-blog2'); ?>">
+                <?php echo $this->escape($b['BlogName']); ?>
+            </a>
         </td>
     </tr>
     <?php endforeach; ?>

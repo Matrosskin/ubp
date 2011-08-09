@@ -18,7 +18,7 @@ class UserController extends Zend_Controller_Action
     public function showaccountAction()
     {
         $q = Doctrine_Query::create()
-            ->select('b.BlogName')
+            ->select('b.BlogName, b.BlogID')
             ->from('ubp_model_Blog b')
             ->leftJoin('b.ubp_model_User u')
             ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
@@ -28,16 +28,17 @@ class UserController extends Zend_Controller_Action
 
     public function showblogAction()
     {
-        $q = Doctrine_Query::create()
-            ->select('p.*')
-            ->from('ubp_model_Post p')
-            ->leftJoin('p.ubp_model_Blog b')
-            ->leftJoin('b.ubp_model_User u')
-            ->where('u.UserName = ?', Zend_Auth::getInstance()->getIdentity())
-                ;
-        $result = $q->fetchArray();
-//        echo '<pre>';var_dump($result);exit;
-        $this->view->posts = $result;
+        ubp_Scripts_Show::showblogAction();
+//        $q = Doctrine_Query::create()
+//            ->select('p.*')
+//            ->from('ubp_model_Post p')
+//            ->leftJoin('p.ubp_model_Blog b')
+//            ->leftJoin('b.ubp_model_User u')
+//            ->where('u.UserName = ?', Zend_Auth::getInstance()->getIdentity())
+//                ;
+//        $result = $q->fetchArray();
+////        echo '<pre>';var_dump($result);exit;
+//        $this->view->posts = $result;
     }
 
     public function createblogAction()
@@ -81,5 +82,10 @@ class UserController extends Zend_Controller_Action
                 $this->_redirect('/my/blog');
             }
         }
+    }
+
+    public function showpostAction()
+    {
+        ubp_Scripts_Show::showpostAction();
     }
 }

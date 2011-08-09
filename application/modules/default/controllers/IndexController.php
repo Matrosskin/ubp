@@ -41,7 +41,12 @@ class IndexController extends Zend_Controller_Action
 
     public function showblogAction()
     {
+        ubp_Scripts_Show::showblogAction();
+    }
 
+    public function showpostAction()
+    {
+        ubp_Scripts_Show::showpostAction();
     }
 }
 
