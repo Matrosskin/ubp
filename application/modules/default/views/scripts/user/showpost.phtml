@@ -1,0 +1,23 @@
+<h2> This is post of somethin user...</h2>
+<table>
+    <tr>
+        <td>
+            <h3><?php echo $this->escape($this->post['PostName']); ?></h3>
+
+            <a href="<?php echo $this->url(array('id' => ($this->post['PostID'])), 'd-post'); ?>"
+                style="float:right; margin-right: 10px;">
+                DELETE
+            </a>
+            <a href="<?php echo $this->url(array('id' => ($this->post['PostID'])), 'e-post'); ?>"
+                style="float:right;  margin-right: 10px;">
+                EDIT
+            </a>
+            <br style="clear:right" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->escape($this->post['PostBody']); ?>
+        </td>
+    </tr>
+</table>

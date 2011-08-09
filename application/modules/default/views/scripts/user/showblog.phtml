@@ -6,6 +6,16 @@
             <a href="<?php echo $this->url(array('id' => ($p['PostID'])), 'shm-post'); ?>">
                 <h3><?php echo $this->escape($p['PostName']); ?></h3>
             </a>
+
+            <a href="<?php echo $this->url(array('id' => ($p['PostID'])), 'd-post'); ?>"
+                style="float:right; margin-right: 10px;">
+                DELETE
+            </a>
+            <a href="<?php echo $this->url(array('id' => ($p['PostID'])), 'e-post'); ?>"
+                style="float:right;  margin-right: 10px;">
+                EDIT
+            </a>
+            <br style="clear:right" />
         </td>
     </tr>
     <tr>

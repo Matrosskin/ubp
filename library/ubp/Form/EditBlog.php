@@ -8,7 +8,7 @@ class ubp_Form_EditBlog extends Zend_Form
         $this->setAction('/my/editblog')
              ->setMethod('post');
 
-        $id = new Zend_Form_Element_Hidden('BlogID');
+        $id = new Zend_Form_Element_Hidden('BlogID')
 //        $id->setOptions(array('size' => '50'))
 //           ->addValidator('NotEmpty', 'Int')
 //           ->addFilter('HtmlEntities', 'StripTags', 'StringTrim')

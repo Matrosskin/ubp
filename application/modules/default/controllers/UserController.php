@@ -62,33 +62,6 @@ class UserController extends Zend_Controller_Action
         }
     }
 
-    public function createpostAction()
-    {
-        $form = new ubp_Form_CreatePost();
-        $this->view->form = $form;
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
-                $newpost = new ubp_model_Post();
-                $newpost->fromArray($form->getValues());
-                $q = Doctrine_Query::create()
-                    ->select('b.BlogID')
-                    ->from('ubp_model_Blog b')
-                    ->leftJoin('b.ubp_model_User u')
-                    ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
-                $result = $q->fetchArray();
-//                echo '<pre>';var_dump($result);exit;
-                $newpost->set('BlogID', $result[0]['BlogID']);
-                $newpost->save();
-                $this->_redirect('/my/showblog/' . $result[0]['BlogID']);
-            }
-        }
-    }
-
-    public function showpostAction()
-    {
-        ubp_Scripts_Show::showpostAction();
-    }
-
     public function editblogAction()
     {
         // generate input form
@@ -172,6 +145,127 @@ class UserController extends Zend_Controller_Action
             $this->_helper->getHelper('FlashMessenger')
                 ->addMessage('The records were successfully deleted.');
             $this->_redirect('/my/account');
+        } else {
+            throw new Zend_Controller_Action_Exception('Invalid input');
+        }
+    }
+
+    public function showpostAction()
+    {
+        ubp_Scripts_Show::showpostAction();
+    }
+
+    public function createpostAction()
+    {
+        $form = new ubp_Form_CreatePost();
+        $this->view->form = $form;
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
+                $newpost = new ubp_model_Post();
+                $newpost->fromArray($form->getValues());
+                $q = Doctrine_Query::create()
+                    ->select('b.BlogID')
+                    ->from('ubp_model_Blog b')
+                    ->leftJoin('b.ubp_model_User u')
+                    ->where('u.Username = ?', Zend_Auth::getInstance()->getIdentity());
+                $result = $q->fetchArray();
+//                echo '<pre>';var_dump($result);exit;
+                $newpost->set('BlogID', $result[0]['BlogID']);
+                $newpost->save();
+                $this->_redirect('/my/showblog/' . $result[0]['BlogID']);
+            }
+        }
+    }
+
+    public function editpostAction()
+    {
+        // generate input form
+        $form = new ubp_Form_EditPost();
+//        $form->setAction('/my/editblog');
+        $this->view->form = $form;
+        if ($this->getRequest()->isPost()) {
+            // if POST request
+            // test if input is valid
+            // retrieve current record
+            // update values and replace in database
+            $postData = $this->getRequest()->getPost();
+            if ($form->isValid($postData)) {
+                $input = $form->getValues();
+                $blog = Doctrine::getTable('ubp_model_Post')
+                    ->find($input['PostID']);
+                $blog->fromArray($input);
+                $blog->save();
+                $this->_helper->getHelper('FlashMessenger')
+                    ->addMessage('The record was successfully updated.');
+                $q = Doctrine_Query::create()
+                    ->select('p.BlogID')
+                    ->from('ubp_model_Post p')
+                    ->where('p.PostID = ?', $input['PostID']);
+                $result = $q->execute();
+                $this->_redirect('/my/showblog/' . $result[0]['BlogID']);
+            }
+        } else {
+            // if GET request
+            // set filters and validators for GET input
+            // test if input is valid
+            // retrieve requested record
+            // pre-populate form
+            $filters = array(
+                'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
+            );
+            $validators = array(
+                'id' => array('NotEmpty', 'Int')
+            );
+            $input = new Zend_Filter_Input($filters, $validators);
+            $input->setData($this->getRequest()->getParams());
+            if ($input->isValid()) {
+                $q = Doctrine_Query::create()
+                    ->from('ubp_model_Post p')
+                    ->where('p.PostID = ?', $input->id);
+                $result = $q->fetchArray();
+                if (count($result) == 1) {
+                    // perform adjustment for date selection lists
+//                    $this->view->form->setAction('/my/editblog/' . $input->id);
+                    $this->view->form->populate($result[0]);
+                } else {
+                    throw new Zend_Controller_Action_Exception('Page not found', 404);
+                }
+            } else {
+                throw new Zend_Controller_Action_Exception('Invalid input');
+            }
+        }
+    }
+
+    public function delpostAction()
+    {
+    // set filters and validators for POST input
+        $filters = array(
+            'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
+        );
+        $validators = array(
+            'id' => array('NotEmpty', 'Int')
+        );
+        $input = new Zend_Filter_Input($filters, $validators);
+        $input->setData($this->getRequest()->getParams());
+        //test if input is valid
+        //read array of record identifiers
+        //delete records from database
+        if($input->isValid()) {
+            $q = Doctrine_Query::create()
+                ->select('p.BlogID')
+                ->from('ubp_model_Post p')
+                ->where('p.PostID = ?', $input->id);
+            $result = $q->execute();
+            $blogid = $result[0]['BlogID'];
+//            Remove post record
+            $q = Doctrine_Query::create()
+                ->delete('ubp_model_Post p')
+                ->where('p.PostID = ?', $input->id);
+            $result = $q->execute();
+
+            $this->_helper->getHelper('FlashMessenger')
+                ->addMessage('The records were successfully deleted.');
+            $this->_redirect('/my/showblog/' . $blogid);
         } else {
             throw new Zend_Controller_Action_Exception('Invalid input');
         }
